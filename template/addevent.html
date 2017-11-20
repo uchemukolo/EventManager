@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>EVENT MANAGER</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" 
+  integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" 
+  crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css">
+  <link rel="stylesheet" type="text/css" href="css/addevent.css">
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" 
+  integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" 
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" 
+  integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" 
+  crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" 
+  integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" 
+  crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="container-fliuid">
+    <div class="row">
+      <div class="col-md-4 offset-md-4">
+        <form class="form-inline">
+        </form>
+      </div>
+    </div>
+  </div>
+  <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+   <a class="navbar-brand" href="index2.html" style="color: #ffffff;">Event Manager</a>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="index.html" style="color: #ffffff;"> <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="addcenter.html" style="color: #ffffff;">Add Event</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="eventcenter.html" style="color: #ffffff;">Event Centers</a>
+      </li>
+      <li class="nav-item">
+            <a class="nav-link" href="contact.html" style="color: #ffffff;">Contact Us</a>
+      </li>
+      <li class="nav-item">
+            <a class="nav-link" href="login.html" style="color: #ffffff;">Login</a>
+      </li>
+      <li class="nav-item">
+            <a class="nav-link" href="register.html" style="color: #ffffff;">Register</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="color: #ffffff;">Sign Out</button>
+    </form>
+  </div>
+</nav>
+</br>
+<div class="row animated fadeInLeft" style="padding:10px">
+    <div class="col-md-6 offset-md-3 jumbotron bg-primary" style="color:#fff;">
+      <h3  style="text-align:center;">Add Event</h3>
+      <form>
+        </br>
+    <div class="form-group">
+      <label for="exampleInputEmail1"><strong>Location</strong></label>
+      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Where do you want to host your event?">
+      
+  
+      <label for="exampleInputEmail1"><strong>Capacity</strong></label>
+      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Number of guests">
+          <label for="exampleSelect1"><strong>Type of Event</strong></label>
+      <select class="form-control col-md-6" id="exampleSelect1" placeholder="Select">
+        <option>Wedding Reception</option>
+        <option>Get Together</option>
+        <option>Fashion Show</option>
+        <option>Meeting</option>
+        <option>Corporate Party</option>
+        <option>Training</option>
+        <option>Pool Party</option>
+        <option>Conference</option>
+        <option>Birthday</option>
+        <option>Product Launch</option>
+        <option>Briday Shower</option>
+        <option>Exhibition</option>
+        <option>Bachelor Party</option>
+        <option>Award Show</option>
+        <option>Other</option>
+      </select>
+      <label >Event Date</label>
+      <input type="date" class="form-control" id="formUsernameInput" placeholder="mm/dd/yyyy">
+      <label >Phone Number</label>
+      <input type="text" class="form-control" id="formUsernameInput" placeholder="Phone Number">
+    <button type="submit" class="btn btn-secondary"><strong>Submit</strong></button>
+  
+    
+  </form>
+  </div>
+  
+</body>
+</html>
