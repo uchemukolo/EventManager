@@ -4,7 +4,8 @@
   "description": "Given you manage an events center, this app will help you accept applications to use your center / facilities, and will either decline events when the proposed day is already taken, or suggest an available day",
   "main": "app.js",
   "scripts": {
-    "start:dev": "nodemon ./server/bin/www",
+    "start": "nodemon --watch server --exec babel-node -- server/bin/www.js",
+    "u": "nodemon --watch server --exec babel-node -- server/bin/www.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -28,6 +29,9 @@
     "morgan": "^1.9.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "nodemon": "^1.12.1"
   }
 }
