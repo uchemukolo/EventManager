@@ -58,48 +58,23 @@ class Event {
     //     })
     }
 }
-//    editEvent(req, res) {
-//     const {id, location, attendees, eventType, eventDate, phoneNumber} = req.body;
+   editEvent(req, res) {
+    const {id, location, attendees, eventType, eventDate, phoneNumber} = req.body;
+    let pos = global.events.findIndex(x=>x.id===parseInt(req.params.id, 10)); {
+    console.log(pos);
+
+                global.events[pos].location = req.body.location;
+                global.events[pos].eventDate = req.body.eventDate;
+            return res.status(201).send({
+                message: 'Update Successful',
+                event: global.events,
+                error: false
+             });
+            }
+        }
     
-//         if (!location) {
-//             res.status(400).send({
-//                 message: 'Location Cannot Be Empty!'
-//             })
-//         } else if(!attendees) {
-//             res.status(400).send({
-//                 message: 'Field Cannot Be Empty!'
-//             })
-//         } else if(!eventType) {
-//             res.status(400).send({
-//                 message: 'Please Select Type Of Event'
-//             })
-//         } else if(!eventDate) {
-//             res.status(400).send({
-//                 message: 'Please Choose a Date'
-//             })
-//         } else if(!phoneNumber) {
-//             res.status(400).send({
-//                 message: 'Please Add Phone Number'
-//             })
-//         } else { 
-//         global.events.push(req.body);
-            
-//         return res.status(201).send({
-//                 message: 'Update Successful',
-//                 event: global.events,
-//                 error: false
-            
-//             });
-            
-//         //     res.status(201).send({
-//         //         event: global.events,
-//         //         error: false
-//         //     })
-        }   
-//    }
-// }
-
-
-const eventController = new Event()
+    };
+         
+    const eventController = new Event();
 
 export default eventController;
