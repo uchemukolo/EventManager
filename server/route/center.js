@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/', center.addCenter);
 router.put('/:id', center.editCenter);
-// router.get('/', center.getAll);
+router.get('/', center.getAll);
 // router.get('/:id', center.getCenter);
 
 

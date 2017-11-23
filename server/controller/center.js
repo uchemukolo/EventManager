@@ -68,14 +68,21 @@ class Center {
             global.events[pos].facilities = req.body.facilities;
             return res.status(201).send({
                 message: 'Update Successful',
-                event: global.centers,
+                centers: global.centers,
                 error: false
             });
         }
         return res.status(404).send({
             message: 'Not Found',
-            event: global.centers,
+            centers: global.centers,
             error: true
+        });
+    }
+    getAll(req, res) {
+        return res.status(201).send({
+            message: 'Successful',
+            centers: global.centers,
+            error: false
         });
     }
 
