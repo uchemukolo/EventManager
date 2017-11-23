@@ -1,3 +1,11 @@
 {
-    "presets":["env"]
+FT-152957526-add-Event-API-using-Dummy-Data
+    "presets": ["es2015"],
+     "env": {
+      "test": {
+        "plugins": [
+          "istanbul"
+        ]
+      }
+}
 }
