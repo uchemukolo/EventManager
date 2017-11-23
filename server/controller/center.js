@@ -60,6 +60,24 @@ class Center {
 
         }
     }
+    editCenter(req, res) {
+        const { centerId, name, description, location, capacity, venueType, facilities } = req.body;
+        let pos = global.centers.findIndex(x => x.centerId === parseInt(req.params.id, 10)); {
+            //console.log(pos);
+            global.centers[pos].description = req.body.description;
+            global.events[pos].facilities = req.body.facilities;
+            return res.status(201).send({
+                message: 'Update Successful',
+                event: global.centers,
+                error: false
+            });
+        }
+        return res.status(404).send({
+            message: 'Not Found',
+            event: global.centers,
+            error: true
+        });
+    }
 
 }
 const centerController = new Center()
