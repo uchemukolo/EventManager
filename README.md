@@ -14,11 +14,11 @@ npm install - to install the dependencies need by the app
 npm run start:dev - to run the app
 API ENDPOINTS
 
-Request	End Point	Action	Data
-POST /events/  Creates an event
-PUT /events/<eventId>	Edit an event   	
-DELETE /events/<eventId>	Delete an event
-POST /centers/	Add a new center
-GET /centers/	Get all centers
-GET /centers/<centerId>	Get a single center
-PUT /centers/<centerId>	Modify the details of center
+Request	End Point	Action	Data,
+POST /events/  Creates an event,
+PUT /events/<eventId>	Edit an event ,  	
+DELETE /events/<eventId>	Delete an event,
+POST /centers/	Add a new center,
+GET /centers/	Get all centers,
+GET /centers/<centerId>	Get a single center,
+PUT /centers/<centerId>	Modify the details of center.
