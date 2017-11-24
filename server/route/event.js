@@ -9,6 +9,5 @@ router.delete('/:id', event.deleteEvent);
 // router.get('/', event.deleteEvent);
 
 
-
-//console.log(event)
+// console.log(event)
 export default router;

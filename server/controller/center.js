@@ -85,7 +85,21 @@ class Center {
             error: false
         });
     }
-
+    getCenter(req, res) {
+        for (let i = 0; i < global.centers.length; i++) {
+            if (global.centers[i].id === parseInt(req.params.id, 10)) {
+                return res.status(201).send({
+                    center: global.centers[i],
+                    message: 'Successful',
+                    error: false,
+                });
+            }
+        }
+        return res.status(404).send({
+            message: 'Not Found',
+            error: true,
+        });
+    }
 }
 const centerController = new Center()
 
