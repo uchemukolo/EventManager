@@ -1,4 +1,5 @@
 {
+  CH-Write-Tests-Integrate-TravisCI-Coveralls-HoundCI
   "presets": [
     "es2015"
   ]
