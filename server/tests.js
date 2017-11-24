@@ -84,7 +84,7 @@ describe('API Integration Tests', () => {
                             location: 'Lekki',
                             attendees: 200,
                             eventType: 'Wedding Reception',
-                            EventDate: '2/12/2017',
+                            eventDate: '2/12/2017',
                             phoneNumber: '080333222444'
                           })
                           .end((err, res) => {
