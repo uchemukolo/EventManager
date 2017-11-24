@@ -19,7 +19,7 @@ global.events = [{
 class Event {
 
   addEvent(req, res) {
-    const { id, location, attendees, eventType, eventDate, phoneNumber } = req.body;
+    const { location, attendees, eventType, eventDate, phoneNumber } = req.body;
 
     if (!location) {
       res.status(400).send({
@@ -27,35 +27,33 @@ class Event {
       });
     } else if (!attendees) {
       res.status(400).send({
-          message: 'Field Cannot Be Empty!'
-        });
+        message: 'Field Cannot Be Empty!'
+      });
     } else if (!eventType) {
-        res.status(400).send({
-            message: 'Please Select Type Of Event'
-          });
-      } else if (!eventDate) {
-          res.status(400).send({
-            message: 'Please Choose a Date'
-          });
-        } else if (!phoneNumber) {
-          res.status(400).send({
-            message: 'Please Add Phone Number'
-          });
-        } else {
-          global.events.push(req.body);
+      res.status(400).send({
+        message: 'Please Select Type Of Event'
+      });
+    } else if (!eventDate) {
+      res.status(400).send({
+        message: 'Please Choose a Date'
+      });
+    } else if (!phoneNumber) {
+      res.status(400).send({
+        message: 'Please Add Phone Number'
+      });
+    } else {
+      global.events.push(req.body);
 
-          return res.status(201).send({
-            message: 'Successful',
-            event: global.events,
-            error: false
+      return res.status(201).send({
+        message: 'Successful',
+        event: global.events,
+        error: false
 
-          });
-        }
+      });
+    }
   }
   editEvent(req, res) {
-    const { id, location, attendees, eventType, eventDate, phoneNumber } = req.body;
     let pos = global.events.findIndex(x => x.id === parseInt(req.params.id, 10)); {
-            // console.log(pos);
       global.events[pos].location = req.body.location;
       global.events[pos].eventDate = req.body.eventDate;
       return res.status(201).send({
