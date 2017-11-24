@@ -21,73 +21,75 @@ global.centers = [{
 class Center {
 
   addCenter(req, res) {
-    const { id, name, description, location, capacity, venueType, facilities } = req.body;
+    const { name, description, location, capacity, venueType, facilities } = req.body;
 
     if (!name) {
-        res.status(400).send({
-            message: 'Please Add Name Of The Center!'
-          });
-      } else if (!description) {
-          res.status(400).send({
-            message: 'Field Cannot Be Empty!'
-          });
-        } else if (!location) {
-          res.status(400).send({
-            message: 'Please Select location Of Event Center'
-          });
-        } else if (!capacity) {
-          res.status(400).send({
-            message: 'Please Select Capacity'
-          });
-        } else if (!venueType) {
-          res.status(400).send({
-            message: 'Please Select Venue Type'
-          });
-        }
-        else if (!facilities) {
-          res.status(400).send({
-            message: 'Please List Available Facilities'
-          });
-        } else {
-          global.centers.push(req.body);
+      res.status(400).send({
+        message: 'Please Add Name Of The Center!'
+      });
+    } else if (!description) {
+      res.status(400).send({
+        message: 'Field Cannot Be Empty!'
+      });
+    } else if (!location) {
+      res.status(400).send({
+        message: 'Please Select location Of Event Center'
+      });
+    } else if (!capacity) {
+      res.status(400).send({
+        message: 'Please Select Capacity'
+      });
+    } else if (!venueType) {
+      res.status(400).send({
+        message: 'Please Select Venue Type'
+      });
+    } else if (!facilities) {
+      res.status(400).send({
+        message: 'Please List Available Facilities'
+      });
+    } else {
+      const centers = {
+        centerId: global.events.length + 1,
+        name,
+        description,
+        location,
+        capacity,
+        venueType,
+        facilities
+      };
+      global.events.push(centers);
 
-          return res.status(201).send({
-            message: 'Successful',
-            event: global.centers,
-            error: false
+      return res.status(201).send({
+        message: 'Successful',
+        event: centers,
 
-          });
-        }
+      });
+    }
   }
   editCenter(req, res) {
-    const { centerId, name, description, location, capacity, venueType, facilities } = req.body;
-    let pos = global.centers.findIndex(x => x.centerId === parseInt(req.params.id, 10)); {
-            // console.log(pos);
-        global.centers[pos].description = req.body.description;
-        global.events[pos].facilities = req.body.facilities;
-        return res.status(201).send({
-            message: 'Update Successful',
-            centers: global.centers,
-            error: false
-          });
-      }
-    return res.status(404).send({
-        message: 'Not Found',
-        centers: global.centers,
-        error: true
-      });
+    // const { centerId, name, description, location, capacity, venueType, facilities } = req.body;
+    let pos = global.centers.findIndex(x => x.centerId === parseInt(req.params.id, 10));
+
+    global.centers[pos].name = req.body.name || global.centers[pos].name;
+    global.events[pos].description = req.body.description || global.events[pos].description;
+    global.centers[pos].location = req.body.location || global.centers[pos].location;
+    global.events[pos].capacity = req.body.capacity || global.events[pos].capacity;
+    global.centers[pos].venueType = req.body.venueType || global.centers[pos].venueType;
+    global.events[pos].facilities = req.body.facilities || global.events[pos].facilities;
+    return res.status(201).send({
+      message: 'Update Successful',
+      centers: global.centers[pos],
+    });
   }
   getAll(req, res) {
     return res.status(200).send({
-        message: 'Successful',
-        centers: global.centers,
-        error: false
-      });
+      message: 'Successful',
+      centers: global.centers,
+
+    });
   }
   getCenter(req, res) {
     const pos = global.centers.findIndex(x => x.centerId === parseInt(req.params.id, 10));
-        // console.log(global.centers[pos]);
-
     return res.status(200).send({ center: global.centers[pos] });
   }
 
