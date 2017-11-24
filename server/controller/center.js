@@ -78,7 +78,7 @@ class Center {
       });
   }
   getAll(req, res) {
-    return res.status(201).send({
+    return res.status(200).send({
         message: 'Successful',
         centers: global.centers,
         error: false
