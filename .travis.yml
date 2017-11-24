@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+- "6"
+env:
+  global:
+    - export NODE_ENV=test
+script:
+- npm run test:db
+- npm install
+after_success: 'npm run coveralls'
