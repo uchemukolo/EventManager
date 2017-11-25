@@ -33,7 +33,7 @@ describe('API Integration Tests', () => {
       });
     });
     describe('Modify Center Details', () => {
-      it('return 201 for Update successful', (done) => {
+      it('return 200 for Update successful', (done) => {
         request.put(editCenterUrl)
                       .send({
                         facilities: 'Air Conditioning',
@@ -64,7 +64,7 @@ describe('API Integration Tests', () => {
       });
     });
     describe('Modify Event Details', () => {
-      it('return 201 for Update successful', (done) => {
+      it('return 200 for Update successful', (done) => {
         request.put(editEventUrl)
                         .send({
                           location: 'Lekki',
