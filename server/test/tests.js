@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
-import app from './app';
+import app from '../src/app';
 
 const request = supertest(app);
 const rootURL = '/api';
@@ -33,14 +33,14 @@ describe('API Integration Tests', () => {
       });
     });
     describe('Modify Center Details', () => {
-      it('return 201 for Update successful', (done) => {
+      it('return 200 for Update successful', (done) => {
         request.put(editCenterUrl)
                       .send({
                         facilities: 'Air Conditioning',
                         description: 'Suitable for a Wedding Reception',
                       })
                       .end((err, res) => {
-                        expect(res.status).to.equal(201);
+                        expect(res.status).to.equal(200);
                         done();
                       });
       });
@@ -64,14 +64,14 @@ describe('API Integration Tests', () => {
       });
     });
     describe('Modify Event Details', () => {
-      it('return 201 for Update successful', (done) => {
+      it('return 200 for Update successful', (done) => {
         request.put(editEventUrl)
                         .send({
                           location: 'Lekki',
                           eventType: 'Wedding Reception',
                         })
                         .end((err, res) => {
-                          expect(res.status).to.equal(201);
+                          expect(res.status).to.equal(200);
                           done();
                         });
       });

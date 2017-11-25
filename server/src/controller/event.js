@@ -67,7 +67,7 @@ class Event {
     global.events[pos].eventType = req.body.eventType || global.events[pos].eventType;
     global.events[pos].eventDate = req.body.eventDate || global.events[pos].eventDate;
     global.events[pos].phoneNumber = req.body.phoneNumber || global.events[pos].phoneNumber;
-    return res.status(201).send({
+    return res.status(200).send({
       message: 'Update Successful',
       event: global.events[pos],
 

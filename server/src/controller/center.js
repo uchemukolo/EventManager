@@ -76,7 +76,7 @@ class Center {
     global.events[pos].capacity = req.body.capacity || global.events[pos].capacity;
     global.centers[pos].venueType = req.body.venueType || global.centers[pos].venueType;
     global.events[pos].facilities = req.body.facilities || global.events[pos].facilities;
-    return res.status(201).send({
+    return res.status(200).send({
       message: 'Update Successful',
       centers: global.centers[pos],
     });
