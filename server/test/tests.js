@@ -40,7 +40,7 @@ describe('API Integration Tests', () => {
                         description: 'Suitable for a Wedding Reception',
                       })
                       .end((err, res) => {
-                        expect(res.status).to.equal(201);
+                        expect(res.status).to.equal(200);
                         done();
                       });
       });
@@ -71,7 +71,7 @@ describe('API Integration Tests', () => {
                           eventType: 'Wedding Reception',
                         })
                         .end((err, res) => {
-                          expect(res.status).to.equal(201);
+                          expect(res.status).to.equal(200);
                           done();
                         });
       });
