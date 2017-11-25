@@ -6,4 +6,4 @@ before-script:
     - npm install
 
 script:
-    - npm run test:db
+    - npm run test
