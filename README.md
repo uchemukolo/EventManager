@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/uchemukolo/EventManager.svg?branch=develop)](https://travis-ci.org/uchemukolo/EventManager)[![Coverage Status](https://coveralls.io/repos/github/uchemukolo/EventManager/badge.svg?branch=develop)](https://coveralls.io/github/uchemukolo/EventManager?branch=develop)[![Test Coverage](https://api.codeclimate.com/v1/badges/33a7c69d803fcaf32f1f/test_coverage)](https://codeclimate.com/github/uchemukolo/EventManager/test_coverage)
+[![Build Status](https://travis-ci.org/uchemukolo/EventManager.svg?branch=develop)](https://travis-ci.org/uchemukolo/EventManager)[![Coverage Status](https://coveralls.io/repos/github/uchemukolo/EventManager/badge.svg?branch=develop)](https://coveralls.io/github/uchemukolo/EventManager?branch=develop)[![Maintainability](https://api.codeclimate.com/v1/badges/33a7c69d803fcaf32f1f/maintainability)](https://codeclimate.com/github/uchemukolo/EventManager/maintainability)
 # EventManager
 Given you manage an events center, this app will help you accept applications to use your center / facilities, and will either decline events when the proposed day is already taken, or suggest an available day
 
