@@ -4,9 +4,9 @@ import event from './event';
 import center from './center';
 
 
-const route = express.Router();
+const v1 = express.Router();
 
-route.use('/events', event);
-route.use('/centers', center);
+v1.use('/events', event);
+v1.use('/centers', center);
 
-export default route;
+export default v1;
