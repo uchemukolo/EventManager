@@ -28,7 +28,9 @@ export default (sequelize, DataTypes) => {
 }) 
   users.associate = (models) => {
           users.hasMany(models.events, {
-            foreignKey: 'userId'
+            foreignKey: 'userId',
+            onDelete: 'CASCADE',
+            
           });
         };
       };
