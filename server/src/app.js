@@ -2,6 +2,7 @@ import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import event from './route/index.js';
+import center from './route/index.js';
 
 
 const app = express();
