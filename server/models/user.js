@@ -1,10 +1,10 @@
 'use strict';
 export default (sequelize, DataTypes) => {
   const users = sequelize.define('users', {
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
   },
   firstName: {
     type: DataTypes.STRING
@@ -25,7 +25,7 @@ export default (sequelize, DataTypes) => {
     type: DataTypes.STRING,
     allowNull: false
   }
-});
+}) 
   users.associate = (models) => {
           users.hasMany(models.events, {
             foreignKey: 'userId'
