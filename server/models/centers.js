@@ -32,5 +32,6 @@ export default (sequelize, DataTypes) => {
     //     // associations can be defined here
     //   }
     // }
-  )};
-  return centers;
+  )
+    return centers;
+  };

@@ -33,6 +33,5 @@ export default (sequelize, DataTypes) => {
             
           });
         };
-      };
-
-  return user;
+      return user;
+    };

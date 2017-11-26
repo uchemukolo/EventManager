@@ -4,7 +4,7 @@ export default (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false
-    } ,     
+    },     
     centerId: {
       type: DataTypes.INTEGER,
       allowNull: false
@@ -27,6 +27,6 @@ export default (sequelize, DataTypes) => {
       foreignKey: 'centerId',
       onDelete: 'CASCADE',
     });
-  }
+  };
   return events;
 };
