@@ -4,12 +4,12 @@ import app from '../src/app';
 
 const request = supertest(app);
 const rootURL = '/api';
-const centerUrl = `${rootURL}/centers`;
-const centerDetailUrl = `${rootURL}/centers/1`;
-const editCenterUrl = `${rootURL}/centers/1`;
-const addCenterUrl = `${rootURL}/centers`;
-const addEventUrl = `${rootURL}/events`;
-const editEventUrl = `${rootURL}/events/1`;
+const centerUrl = `${rootURL}/v1/centers`;
+const centerDetailUrl = `${rootURL}/v1/centers/1`;
+const editCenterUrl = `${rootURL}/v1/centers/1`;
+const addCenterUrl = `${rootURL}/v1/centers`;
+const addEventUrl = `${rootURL}/v1/events`;
+const editEventUrl = `${rootURL}/v1/events/1`;
 
 
 describe('API Integration Tests', () => {
