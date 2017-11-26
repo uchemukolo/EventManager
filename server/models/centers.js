@@ -6,7 +6,7 @@ export default (sequelize, DataTypes) => {
       allowNull: false
     },
     description: {
-      type: DataTypes.TEXTAREA,
+      type: DataTypes.TEXT,
       allowNull: false
     },
     location: {
@@ -23,7 +23,7 @@ export default (sequelize, DataTypes) => {
 
     },
     facilities: {
-      type: DataTypes.TEXTAREA,
+      type: DataTypes.TEXT,
       allowNull: false
   }, 
 }

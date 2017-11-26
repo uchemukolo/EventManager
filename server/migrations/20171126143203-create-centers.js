@@ -13,7 +13,7 @@ module.exports = {
         allowNull: false
       },
       description: {
-        type: Sequelize.TEXTAREA,
+        type: Sequelize.TEXT,
         allowNull: false
       },
       location: {
@@ -29,7 +29,7 @@ module.exports = {
         allowNull: false
       },
       facilities: {
-        type: Sequelize.TEXTAREA,
+        type: Sequelize.TEXT,
         allowNull: false
       },
       createdAt: {
