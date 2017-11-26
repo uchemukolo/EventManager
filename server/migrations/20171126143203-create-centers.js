@@ -16,6 +16,10 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false
       },
+      image: {
+        type: Sequelize.BLOB,
+        allowNull: false
+      },
       location: {
         type: Sequelize.STRING,
         allowNull: false

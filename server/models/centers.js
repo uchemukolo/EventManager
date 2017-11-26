@@ -9,6 +9,10 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false
     },
+    image: {
+      type: DataTypes.BLOB,
+      allowNull: false
+    },
     location: {
       type:DataTypes.STRING,
       allowNull: false

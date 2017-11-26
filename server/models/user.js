@@ -24,7 +24,12 @@ export default (sequelize, DataTypes) => {
   password: {
     type: DataTypes.STRING,
     allowNull: false
-  }
+  },
+  role: {
+    type: DataTypes.STRING,
+    allownull: false,
+    defaultValue: 'user'
+  } 
 }) 
   users.associate = (models) => {
           users.hasMany(models.events, {
@@ -33,5 +38,5 @@ export default (sequelize, DataTypes) => {
             
           });
         };
-      return user;
+      return users;
     };
