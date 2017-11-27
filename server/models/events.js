@@ -1,4 +1,3 @@
-'use strict';
 export default (sequelize, DataTypes) => {
   const events = sequelize.define('events', {
     userId: {

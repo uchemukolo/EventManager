@@ -1,4 +1,3 @@
-'use strict';
 export default (sequelize, DataTypes) => {
   const users = sequelize.define('users', {
   username: {
@@ -34,8 +33,7 @@ export default (sequelize, DataTypes) => {
   users.associate = (models) => {
           users.hasMany(models.events, {
             foreignKey: 'userId',
-            onDelete: 'CASCADE',
-            
+            onDelete: 'CASCADE',           
           });
         };
       return users;

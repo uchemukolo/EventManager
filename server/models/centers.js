@@ -1,4 +1,3 @@
-'use strict';
 export default (sequelize, DataTypes) => {
   const centers = sequelize.define('centers', {
     name: {
@@ -7,10 +6,6 @@ export default (sequelize, DataTypes) => {
     },
     description: {
       type: DataTypes.TEXT,
-      allowNull: false
-    },
-    image: {
-      type: DataTypes.BLOB,
       allowNull: false
     },
     location: {
@@ -30,12 +25,16 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false
   }, 
-}
-    // classMethods: {
-    //   associate: function(models) {
-    //     // associations can be defined here
-    //   }
-    // }
-  )
+    event: {
+    type: DataTypes.JSON,
+    allowNull: false
+}, 
+})
+  centers.associate = (models) => {
+    users.hasMany(models.centers, {
+      foreignKey: 'centerId',
+      onDelete: 'CASCADE',           
+    });
+  }
     return centers;
   };

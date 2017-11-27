@@ -9,10 +9,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,        
+        references: {
+          model: 'users',
+          key: 'id',
+          as: 'userId'
+        }
       },
       centerId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'centers',
+          key: 'id',
+          as: 'centerId'
+        }
       },
       eventType: {
         type: Sequelize.STRING
