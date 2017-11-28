@@ -1,5 +1,5 @@
 export default (sequelize, DataTypes) => {
-  const users = sequelize.define('users', {
+  const Users = sequelize.define('Users', {
   username: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -27,14 +27,14 @@ export default (sequelize, DataTypes) => {
   role: {
     type: DataTypes.STRING,
     allownull: false,
-    defaultValue: 'user'
+    defaultValue: 'Regular'
   } 
 }) 
-  users.associate = (models) => {
-          users.hasMany(models.events, {
+  Users.associate = (models) => {
+          Users.hasMany(models.Events, {
             foreignKey: 'userId',
             onDelete: 'CASCADE',           
           });
         };
-      return users;
+      return Users;
     };

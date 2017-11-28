@@ -1,5 +1,5 @@
 export default (sequelize, DataTypes) => {
-  const centers = sequelize.define('centers', {
+  const Centers = sequelize.define('Centers', {
     name: {
       type: DataTypes.STRING,
       allowNull: false
@@ -25,13 +25,9 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false
   }, 
-    event: {
-    type: DataTypes.JSON,
-    allowNull: false
-}, 
 })
-  centers.associate = (models) => {
-    users.hasMany(models.centers, {
+  Centers.associate = (models) => {
+    Centers.hasMany(models.Events, {
       foreignKey: 'centerId',
       onDelete: 'CASCADE',           
     });
