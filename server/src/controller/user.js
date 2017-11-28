@@ -1,11 +1,35 @@
-import models from '../../models';
+import model from '../../models';
+import bcryptjs from 'bcryptjs'
+import jwt from 'jsonwebtoken';
+import Sequelize from 'sequelize';
 
-const Users = models.Users;
 
+const Users = model.Users;
 class User {
     signup (req, res) {
-        const {email, username, password, confirmPassword} = req.body;
-            users.find({
+        const {email, username, firstName, lastName, password, confirmPassword} = req.body;
+        if (!username || typeof username !== 'string') {
+            return res.status(400).json({
+              username: 'Please Enter Username'
+            });
+          } else if (!email || typeof email !== 'string') {
+            return res.status(400).json({
+              email: 'Please Enter Email'
+            });
+          } else if (!password || typeof  password !== 'string') {
+            return res.status(400).json({
+              password: 'Please Enter password'
+            });
+          } else if (password.length < 6) {
+            return res.status(400).json({
+              password: 'Password is too short!'
+            });
+          } else if(password !== confirmPassword) {
+            return res.status(400).json({
+              password: 'password does not match'
+              });
+          } else {
+            Users.find({
                 where:{
                     $or: [
                         { email: email },
@@ -14,21 +38,28 @@ class User {
                 }
             }).then(foundUser => {
                 if (!foundUser) {
-                    return users
+                    return Users
                     .create({
                         email: email,
                         username: username,
-                        password: bcryptjs.hashSync(password, 10)
+                        firstName: firstName,
+                        lastName: lastName,
+                        password: bcryptjs.hashSync(password, 10),
+                        role: 'Regular'
                     }).then(signup => {
-                        res.status(201).json(signup)
+                        res.status(201).json({
+                            message: 'Signup Successful',
+                            signup
                     })
                     .catch(err => {
                         console.log(err)
                         res.status(500).send({
                             message: 'some error occured!'
-                        })
+                        });
                     })
-                } else if(foundUser.email) {
+                
+                });
+                } else if (foundUser.email) {
                     res.status(400).json({
                         message: 'email already exists'
                     })
@@ -39,10 +70,19 @@ class User {
                 }
             }) 
         }
-
+    }
     signin (req, res) {
         const { username, email, password, } = req.body;
-        return users
+        if (!username || typeof username !== 'string') {
+            res.status(400).json({
+                message: 'Please enter Your username or email'
+             });
+            } else if (!password || typeof password !== 'string') {
+            res.status(400).json({
+            message: 'Please enter Your Password'
+            });
+            } else {
+            return Users
             .findOne({
                  where: {
                     $or: [
@@ -54,24 +94,22 @@ class User {
                  //console.log(found) 
                  if (!foundUser) {
                      res.status(400).json({
-                         message: 'Wrong Signin Credentials!'
+                         message: 'Username or Password!'
                      })
-                 } else if(bcryptjs.compareSync(req.body.password, foundUser.password)){
-                    
+                 } else if(bcryptjs.compareSync(req.body.password, foundUser.password)){   
                     if (foundUser) {
                         return res.status(200).json({
-                             message: 'Signin Successful!'
-                            //  role: foundUser.role,
-                            //  Token: token
+                             message: 'Signin Successful!',
                          }) 
                          } else {
                         res.status(401).json({
-                            ERrOR: 'Incorrect Password'
+                            Error: 'Incorrect Password'
                             })
                      };
                 };
              });
         };
+    }
     }         
 const userController = new User();
 

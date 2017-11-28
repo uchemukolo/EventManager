@@ -1,12 +1,14 @@
-import express from 'express';
+// import express from 'express';
 
-import event from './event';
-import center from './center';
+// import user from './user';
+// import event from './event';
+// import center from './center';
 
 
-const v1 = express.Router();
+// const v1 = express.Router();
 
-v1.use('/events', event);
-v1.use('/centers', center);
+// v1.use('/users', user);
+// v1.use('/events', event);
+// v1.use('/centers', center);
 
-export default v1;
+// export default v1;
