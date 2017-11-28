@@ -24,6 +24,15 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id',
+          as: 'userId'
+        }
+      },
       venueType: {
         type: Sequelize.STRING,
         allowNull: false
