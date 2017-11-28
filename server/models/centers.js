@@ -19,7 +19,10 @@ export default (sequelize, DataTypes) => {
     venueType: {
       type: DataTypes.STRING,
       allowNull: false,
-
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false  
     },
     facilities: {
       type: DataTypes.TEXT,
@@ -29,7 +32,9 @@ export default (sequelize, DataTypes) => {
   Centers.associate = (models) => {
     Centers.hasMany(models.Events, {
       foreignKey: 'centerId',
-      onDelete: 'CASCADE',           
+    });
+    Centers.belongsTo(models.Users, {
+      foreignKey: 'userId',
     });
   }
     return centers;

@@ -35,6 +35,9 @@ export default (sequelize, DataTypes) => {
             foreignKey: 'userId',
             onDelete: 'CASCADE',           
           });
-        };
+          // Users.hasMany(models.Centers, {
+          //   foreignKey: 'userId',
+          //   });
+        }
       return Users;
     };
