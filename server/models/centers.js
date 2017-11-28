@@ -1,6 +1,5 @@
-'use strict';
 export default (sequelize, DataTypes) => {
-  const centers = sequelize.define('centers', {
+  const Centers = sequelize.define('Centers', {
     name: {
       type: DataTypes.STRING,
       allowNull: false
@@ -20,18 +19,23 @@ export default (sequelize, DataTypes) => {
     venueType: {
       type: DataTypes.STRING,
       allowNull: false,
-
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false  
     },
     facilities: {
       type: DataTypes.TEXT,
       allowNull: false
   }, 
-}
-    // classMethods: {
-    //   associate: function(models) {
-    //     // associations can be defined here
-    //   }
-    // }
-  )
+})
+  Centers.associate = (models) => {
+    Centers.hasMany(models.Events, {
+      foreignKey: 'centerId',
+    });
+    Centers.belongsTo(models.Users, {
+      foreignKey: 'userId',
+    });
+  }
     return centers;
   };

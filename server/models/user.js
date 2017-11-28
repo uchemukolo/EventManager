@@ -1,6 +1,5 @@
-'use strict';
 export default (sequelize, DataTypes) => {
-  const users = sequelize.define('users', {
+  const Users = sequelize.define('Users', {
   username: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -24,14 +23,21 @@ export default (sequelize, DataTypes) => {
   password: {
     type: DataTypes.STRING,
     allowNull: false
-  }
+  },
+  role: {
+    type: DataTypes.STRING,
+    allownull: false,
+    defaultValue: 'Regular'
+  } 
 }) 
-  users.associate = (models) => {
-          users.hasMany(models.events, {
+  Users.associate = (models) => {
+          Users.hasMany(models.Events, {
             foreignKey: 'userId',
-            onDelete: 'CASCADE',
-            
+            onDelete: 'CASCADE',           
           });
-        };
-      return user;
+          // Users.hasMany(models.Centers, {
+          //   foreignKey: 'userId',
+          //   });
+        }
+      return Users;
     };
