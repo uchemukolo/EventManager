@@ -63,8 +63,7 @@ class User {
         //     message: 'Please enter Your Password'
         //     });
         //     } else {
-            return Users
-            .findOne({
+        Users.findOne({
                  where: {
                     $or: [
                         { username: req.body.username },
@@ -77,12 +76,6 @@ class User {
                          message: 'Username or Password!'
                      })
                  } else if(bcrypt.compareSync(req.body.password, foundUser.password)){ 
-                    const token = jwt.sign({
-                        id: founduser.id,
-                        username: foundUser.username
-                      }, key, {
-                        expiresIn: 60 * 60 * 24 // Token expires in 24 hours
-                      });  
                     if (foundUser) {
                         return res.status(200).send({
                              message: 'Signin Successful!',
