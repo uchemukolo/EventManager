@@ -3,32 +3,13 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken';
 import Sequelize from 'sequelize';
 
+require('dotenv').config();
 
 const Users = model.Users;
 class User {
     signup (req, res) {
         const {email, username, firstName, lastName, password, confirmPassword} = req.body;
-        // if (!username || typeof username !== 'string') {
-        //     return res.status(400).json({
-        //       username: 'Please Enter Username'
-        //     });
-        //   } else if (!email || typeof email !== 'string') {
-        //     return res.status(400).json({
-        //       email: 'Please Enter Email'
-        //     });
-        //   } else if (!password || typeof  password !== 'string') {
-        //     return res.status(400).json({
-        //       password: 'Please Enter password'
-        //     });
-        //   } else if (password.length < 6) {
-        //     return res.status(400).json({
-        //       password: 'Password is too short!'
-        //     });
-        //   } else if(password !== confirmPassword) {
-        //     return res.status(400).json({
-        //       password: 'password does not match'
-        //       });
-        //   } else {
+
             Users.find({
                 where:{
                     $or: [
@@ -46,10 +27,10 @@ class User {
                         lastName: lastName,
                         password: bcrypt.hashSync(password, 10),
                         role: 'Regular'
-                    }).then(signup => {
-                        res.status(201).json({
+                    }).then(newUser => {
+                        res.status(201).send({
                             message: 'Signup Successful',
-                            signup
+                            newUser
                     })
                     .catch(err => {
                         console.log(err)
@@ -61,11 +42,11 @@ class User {
                 });
                  } 
                 // else if (foundUser.email) {
-                //     res.status(400).json({
+                //     res.status(400).send({
                 //         message: 'email already exists'
                 //     })
                 // } else if (foundUser.username) {
-                //     res.status(400).json({
+                //     res.status(400).send({
                 //         message: 'user name already exists'
                 //     })
                 // }
@@ -74,11 +55,11 @@ class User {
     signin (req, res) {
         const { username, email, password, } = req.body;
         // if (!username || typeof username !== 'string') {
-        //     res.status(400).json({
+        //     res.status(400).send({
         //         message: 'Please enter Your username or email'
         //      });
         //     } else if (!password || typeof password !== 'string') {
-        //     res.status(400).json({
+        //     res.status(400).send({
         //     message: 'Please enter Your Password'
         //     });
         //     } else {
@@ -90,19 +71,24 @@ class User {
                         { email: req.body.username }
                      ]
                  }
-             }).then(foundUser => {
-                 //console.log(found) 
+             }).then(foundUser => { 
                  if (!foundUser) {
-                     res.status(400).json({
+                     res.status(400).send({
                          message: 'Username or Password!'
                      })
-                 } else if(bcrypt.compareSync(req.body.password, foundUser.password)){   
+                 } else if(bcrypt.compareSync(req.body.password, foundUser.password)){ 
+                    const token = jwt.sign({
+                        id: founduser.id,
+                        username: foundUser.username
+                      }, key, {
+                        expiresIn: 60 * 60 * 24 // Token expires in 24 hours
+                      });  
                     if (foundUser) {
-                        return res.status(200).json({
+                        return res.status(200).send({
                              message: 'Signin Successful!',
                          }) 
                          } else {
-                        res.status(401).json({
+                        res.status(401).send({
                             Error: 'Incorrect Password'
                             })
                      };
