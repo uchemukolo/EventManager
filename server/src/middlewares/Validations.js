@@ -2,7 +2,7 @@ const Validation = {
     centerId(req, res, next){
         const centerId = req.params.centerId;
     
-        if (isNaN(recipeId)) {
+        if (!recipeId) {
           return res.status(400).json({
             message: 'Parameter must be a number!'
           });
@@ -13,14 +13,14 @@ const Validation = {
     userId(req, res, next){
         const userId = req.params.userId;
     
-        if (isNaN(userId)) {
+        if (!userId) {
           return res.status(400).json({
             message: 'Parameter must be a number!'
           });
         }
         next();
       },
-    signup(req, res, next) {
+    signUp(req, res, next) {
         const { username, email, password, confirmPassword } = req.body;
         if (!username || typeof username !== 'string') {
           return res.status(400).json({
@@ -44,7 +44,7 @@ const Validation = {
             });
         }  next();
     },
-    Signin(req, res, next) {
+    signIn(req, res, next) {
         const { username, password } = req.body;
         if (!username || typeof username !== 'string') {
         res.status(400).json({
