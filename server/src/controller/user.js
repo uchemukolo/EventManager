@@ -66,11 +66,22 @@ class User {
               message: 'Username or Password!'
             })
           } else if(bcrypt.compareSync(req.body.password, foundUser.password)){
-            if (foundUser) {
+            const token = jwt.sign({role: foundUser.role}, process.env.SECRET_KEY, {
+              expiresIn: 60 * 60 * 24
+            })
+            if (foundUser.role === 'Admin') {
               return res.status(200).send({
-                message: 'Signin Successful!',
-              })
-            } else {
+                message: 'Welcome Admin',
+                role: foundUser.role,
+                Token: token
+            })  
+          }
+          // else if {
+          //     return res.status(200).send({
+          //       message: 'Signin Successful!',
+          //     })
+          //   } 
+            else {
               res.status(401).send({
                 Error: 'Incorrect Password'
               })
