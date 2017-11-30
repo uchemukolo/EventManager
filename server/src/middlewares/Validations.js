@@ -1,28 +1,7 @@
 const Validation = {
-  centerId(req, res, next) {
-    const centerId = req.params.centerId;
-    if (!recipeId) {
-      return res.status(400).send({
-        message: 'Parameter must be a number!'
-      });
-    }
-    next();
-  },
-
-  userId(req, res, next) {
-    const userId = req.params.userId;
-    if (!userId) {
-      return res.status(400).send({
-        message: 'Parameter must be a number!'
-      });
-    }
-    next();
-  },
 
   signup(req, res, next) {
-    const { 
-username, firstName, lastName, email, password, confirmPassword 
-} = req.body;
+    const {username, firstName, lastName, email, password, confirmPassword} = req.body;
     if (!username) {
       return res.status(400).send({
         username: 'Please Enter Username'
@@ -66,10 +45,18 @@ username, firstName, lastName, email, password, confirmPassword
     } next();
   },
   addEvent(req, res, next) {
-    const { eventType, eventDate } = req.body;
+    const { userId, centerId, eventType, eventDate } = req.body;
     if (!eventType) {
       res.status(400).send({
         message: 'Please Select Type Of Event'
+      });
+    } else if (!userId) {
+      return res.status(400).send({
+        message: 'Field Cannot Be Empty!'
+      });
+    } else if (!centerId) {
+      return res.status(400).send({
+        message: 'Field Cannot Be Empty!'
       });
     } else if (!eventDate) {
       res.status(400).send({
@@ -78,13 +65,21 @@ username, firstName, lastName, email, password, confirmPassword
     } next();
   },
   addCenter(req, res, next) {
-    const { name, description, location, capacity, venueType, } = req.body;
+    const { userId, centerId, name, description, location, capacity, venueType, } = req.body;
     if (!name) {
       res.status(400).send({
         message: 'Please Add Name Of The Center!'
       });
     } else if (!description) {
       res.status(400).send({
+        message: 'Field Cannot Be Empty!'
+      });
+    } else if (!userId) {
+      return res.status(400).send({
+        message: 'Field Cannot Be Empty!'
+      });
+    } else if (!centerId) {
+      return res.status(400).send({
         message: 'Field Cannot Be Empty!'
       });
     } else if (!location) {
