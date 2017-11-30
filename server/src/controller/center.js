@@ -1,93 +1,85 @@
-global.centers = [{
-  centerId: 1,
-  name: 'Diamonds Event Center',
-  description: 'Book reception halls, venues for your wedding reception parties e.t.c. Book Marquee, conference centers, party halls, meeting rooms, convention centers and various types of event centers.',
-  location: 'Victoria Island',
-  capacity: 400,
-  venueType: 'Hall',
-  facilities: 'Power supply, Air Conditioning, parking'
-},
-{
-  centerId: 2,
-  name: 'Glitzs Event Center',
-  description: 'Book reception halls, venues for your wedding reception parties e.t.c. Book Marquee, conference centers, party halls, meeting rooms, convention centers and various types of event centers.',
-  location: 'Ikoyi',
-  capacity: 1000,
-  venueType: 'Conference Center',
-  facilities: 'Power supply, Air Conditioning'
-}];
+import model from '../../models';
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken';
+import Sequelize from 'sequelize';
 
+const centers = model.Centers;
 
 class Center {
-
   addCenter(req, res) {
-    const { name, description, location, capacity, venueType, facilities } = req.body;
-
-    if (!name) {
-      res.status(400).send({
-        message: 'Please Add Name Of The Center!'
-      });
-    } else if (!description) {
-      res.status(400).send({
-        message: 'Field Cannot Be Empty!'
-      });
-    } else if (!location) {
-      res.status(400).send({
-        message: 'Please Select location Of Event Center'
-      });
-    } else if (!capacity) {
-      res.status(400).send({
-        message: 'Please Select Capacity'
-      });
-    } else if (!venueType) {
-      res.status(400).send({
-        message: 'Please Select Venue Type'
-      });
-    } else if (!facilities) {
-      res.status(400).send({
-        message: 'Please List Available Facilities'
-      });
-    } else {
-      const centers = {
-        centerId: global.events.length + 1,
-        name,
-        description,
-        location,
-        capacity,
-        venueType,
-        facilities
-      };
-      global.events.push(centers);
-
+    const { name, description, location, capacity, userId, venueType, facilities } = req.body;
+      centers.create ({
+      centerId: req.params.id,
+      name,
+      description,
+      location,
+      capacity,
+      venueType,
+      userId,
+      facilities
+    })
+    .then(created =>{
       return res.status(201).send({
-        message: 'Successful',
-        event: centers,
-
-      });
-    }
-  }
+        message: 'Center Added Successfully',
+        created
+      })
+    })
+    // .catch((err) => {
+    //   return res.status(500).send({
+    //     message: 'Some error occured!'
+    //   });
+    // });
+}
+  
   editCenter(req, res) {
-    // const { centerId, name, description, location, capacity, venueType, facilities } = req.body;
-    let pos = global.centers.findIndex(x => x.centerId === parseInt(req.params.id, 10));
-
-    global.centers[pos].name = req.body.name || global.centers[pos].name;
-    global.events[pos].description = req.body.description || global.events[pos].description;
-    global.centers[pos].location = req.body.location || global.centers[pos].location;
-    global.events[pos].capacity = req.body.capacity || global.events[pos].capacity;
-    global.centers[pos].venueType = req.body.venueType || global.centers[pos].venueType;
-    global.events[pos].facilities = req.body.facilities || global.events[pos].facilities;
-    return res.status(200).send({
-      message: 'Update Successful',
-      centers: global.centers[pos],
-    });
+    const { userId, name, description, location, capacity, venueType, facilities } = req.body;
+    centers.findOne({
+        where: {
+         userId: req.params.id,
+        }
+      })
+      .then(centers => {
+        if (!centers) {
+          return res.status(404).send({
+            message: 'Center Not Found',
+          });
+        } else {
+          return centers
+          .update({
+            userId: req.body.userId || centers.userId,
+            name: req.body.name || centers.name,
+            description: req.body.description || centers.description,
+            location: req.body.location || centers.location,
+            capacity: req.body.capacity || centers.capacity,
+            venueType: req.body.venueType || centers.venueType,
+            facilities: req.body.facilities || centers.facilities     
+        })
+        .then(updated => { 
+          return res.status(201).send({
+          message: 'Update Successful',
+          updated
+        });
+    })
+    .catch((error) => {
+        res.status(500).send({
+          message: 'Some Error Occured'
+        });
+    })
   }
+  })
+    }
+
   getAll(req, res) {
-    return res.status(200).send({
+    return centers
+    .all()
+    .then(getAll => {
+    res.status(200).send({
       message: 'Successful',
-      centers: global.centers,
-
+      getAll
     });
-  }
+  });
+}
+
   getCenter(req, res) {
     const pos = global.centers.findIndex(x => x.centerId === parseInt(req.params.id, 10));
     return res.status(200).send({ center: global.centers[pos] });
