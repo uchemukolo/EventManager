@@ -1,93 +1,97 @@
-global.events = [{
-  id: 1,
-  location: 'Lekki',
-  attendees: 200,
-  eventType: 'Wedding Reception',
-  EventDate: '2/12/2017',
-  phoneNumber: '080333222444'
-},
-{
-  id: 2,
-  location: 'Ikeja',
-  attendees: 500,
-  eventType: 'Corporate Party',
-  EventDate: '3/12/2017',
-  phoneNumber: '080111666777'
+import model from '../../models';
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken';
+import Sequelize from 'sequelize';
 
-}];
+const events = model.Events
 
 class Event {
-
-  addEvent(req, res) {
-    const { location, attendees, eventType, eventDate, phoneNumber } = req.body;
-
-    if (!location) {
-      res.status(400).send({
-        message: 'Location Cannot Be Empty!'
-      });
-    } else if (!attendees) {
-      res.status(400).send({
-        message: 'Field Cannot Be Empty!'
-      });
-    } else if (!eventType) {
-      res.status(400).send({
-        message: 'Please Select Type Of Event'
-      });
-    } else if (!eventDate) {
-      res.status(400).send({
-        message: 'Please Choose a Date'
-      });
-    } else if (!phoneNumber) {
-      res.status(400).send({
-        message: 'Please Add Phone Number'
-      });
-    } else {
-      const events = {
-        id: global.events.length + 1,
-        location,
-        attendees,
-        eventType,
-        eventDate,
-        phoneNumber
-      };
-      global.events.push(events);
-
-
+  addEvent (req, res) {
+    const { userId, eventType, eventDate } = req.body;
+    //   events.findAll({
+    //     where: {
+    //     centerId: req.params.id,
+    //     date: id
+    //   }
+    // });
+      events
+    .create ({
+      userId: req.params.id,
+      eventType,
+      eventDate
+    })
+    .then(created =>{
       return res.status(201).send({
-        message: 'Successful',
-        event: events,
-
-      });
-    }
-  }
-  editEvent(req, res) {
-    let pos = global.events.findIndex(x => x.id === parseInt(req.params.id, 10));
-    global.events[pos].location = req.body.location || global.events[pos].location;
-    global.events[pos].attendees = req.body.attendees || global.events[pos].attendees;
-    global.events[pos].eventType = req.body.eventType || global.events[pos].eventType;
-    global.events[pos].eventDate = req.body.eventDate || global.events[pos].eventDate;
-    global.events[pos].phoneNumber = req.body.phoneNumber || global.events[pos].phoneNumber;
-    return res.status(200).send({
-      message: 'Update Successful',
-      event: global.events[pos],
-
-    });
-  }
-
-  deleteEvent(req, res) {
-    for (let i = 0; i < global.events.length; i++) {
-      console.log(global.events[i]);
-      if (global.events[i].id === Number(req.params.id)) {
-        global.events.splice(i, 1);
-        res.json({
-          message: global.events,
+        message: 'Event Added Successfully',
+        created
+      })
+    })
+    .catch((err) => {
+        console.log(err);
+        return res.status(500).send({
+           message: 'Some error occured!'
+          });
         });
-      }
     }
+  
+
+  editEvent(req, res) {
+    const { eventType, eventDate } = req.body;
+    const update = (req, res) => {
+    events.findOne({
+      where: {
+        userId: req.params.id,
+        id: id
+      }
+    })
+      .then(events => {
+      if (!events) {
+        return res.status(404).send({
+          message: 'Event Not Found',
+        });
+      } else {
+        return events
+        .update({ 
+        eventType: req.body.eventType || events.eventType,
+        description: req.body.eventDate || events.eventDate
+      })
+      .then(updated => { 
+        return res.status(201).send({
+        message: 'Update Successful',
+        updated
+    });
+  })
+  .catch((error) => {
+      res.status(500).send({
+        message: 'Some Error Occured'
+      });
+  })
+}
+})
   }
 }
 
-
+  deleteEvent(req, res) {
+    const destroy = (req, res) => {
+      events.findOne (req.params.id)
+      .then(events => {
+        console.log(events);
+      if (!events) {
+        return res.status(400).send({
+          message: 'Event Not Found',
+        });
+      } else {
+      return events
+        .destroy()
+        .then(() => res.status(204).send({
+            message: 'Event has been deleted'
+        }))
+        .catch(error => res.status(400).send(error));
+      }
+    })
+    .catch(error => res.status(400).send(error));
+  }
+}
+}
 const eventController = new Event();
-
 export default eventController;
