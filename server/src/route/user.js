@@ -5,7 +5,7 @@ import validate from '../middlewares/validations';
 
 const router = express.Router();
 
-router.post('/', validate.signUp, users.signup);
-router.post('/login', validate.signIn, users.signin);
+router.post('/', validate.signup, users.signup);
+router.post('/login', validate.signin, users.signin);
 
 export default router;
