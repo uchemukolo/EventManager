@@ -2,46 +2,56 @@ import model from '../../models';
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken';
 import Sequelize from 'sequelize';
+import Auth from '../middlewares/authenticate'
+
 
 const events = model.Events
 
 class Event {
-  addEvent (req, res) {
-    const { userId, eventType, eventDate } = req.body;
-    //   events.findAll({
-    //     where: {
-    //     centerId: req.params.id,
-    //     date: id
-    //   }
-    // });
-      events
-    .create ({
-      userId: req.params.id,
-      eventType,
-      eventDate
-    })
-    .then(created =>{
-      return res.status(201).send({
-        message: 'Event Added Successfully',
-        created
-      })
-    })
-    .catch((err) => {
-        console.log(err);
-        return res.status(500).send({
-           message: 'Some error occured!'
-          });
-        });
-    }
   
+  addEvent (req, res) {
+    const { userId, centerId, eventType, eventDate } = req.body;
+    console.log('helllloooo ' + req.headers.token)
+    const decoded = jwt.decode(req.headers.token);
+    console.log('helllloooo ' + decoded.user)
+      events.findOne({
+        where: {
+        centerId: req.params.id,
+        eventDate
+      }
+    }).then((event) => {
+      if (event){
+        return res.status(401).send({
+          message:'Date Unavailable! Please Pick Another Day'
+        })
+      }
+      return events
+      .create ({
+        userId: decoded.user.id,
+        centerId: req.body.centerId,      
+        eventType,
+        eventDate
+      })
+      .then(created =>{
+        return res.status(201).send({
+          message: 'Event Added Successfully',
+          centerId: req.body.centerId,      
+          eventType: eventType
+        });
+      })
+      .catch(err => res.send(err))
+    })
+    .catch(err => res.status(500).send(err)) 
 
-  editEvent(req, res) {
+    } 
+
+  
+    editEvent(req, res) {
     const { eventType, eventDate } = req.body;
     const update = (req, res) => {
     events.findOne({
       where: {
-        userId: req.params.id,
-        id: id
+        userId: decoded.user.id,
       }
     })
       .then(events => {
@@ -71,27 +81,27 @@ class Event {
   }
 }
 
-  deleteEvent(req, res) {
-    const destroy = (req, res) => {
-      events.findOne (req.params.id)
-      .then(events => {
-        console.log(events);
-      if (!events) {
-        return res.status(400).send({
-          message: 'Event Not Found',
-        });
-      } else {
-      return events
-        .destroy()
-        .then(() => res.status(204).send({
-            message: 'Event has been deleted'
-        }))
-        .catch(error => res.status(400).send(error));
-      }
-    })
-    .catch(error => res.status(400).send(error));
-  }
-}
+//   deleteEvent(req, res) {
+//     const destroy = (req, res) => {
+//       events.findOne (req.decoded.id)
+//       .then(events => {
+//         console.log(events);
+//       if (!events) {
+//         return res.status(400).send({
+//           message: 'Event Not Found',
+//         });
+//       } else {
+//       return events
+//         .destroy()
+//         .then(() => res.status(204).send({
+//             message: 'Event has been deleted'
+//         }))
+//         .catch(error => res.status(400).send(error));
+//       }
+//     })
+//     .catch(error => res.status(400).send(error));
+//   }
+// }
 }
 const eventController = new Event();
 export default eventController;

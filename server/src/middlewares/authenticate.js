@@ -6,7 +6,7 @@ const key = process.env.SECRET_KEY;
 
 const authenticate = {
   Verify: (req, res, next) => {
-    const token = req.body.token || req.query.token || req.headers['x-token'];
+    const token = req.body.token || req.query.token || req.headers.token;
     if (!token) {
       return res.status(401).send({
         message: 'Unauthorised User!'
@@ -24,13 +24,12 @@ const authenticate = {
     });
   },
   Admin: (req, res, next) => {
-    console.log(req.decoded.role)
     if (req.decoded && req.decoded.role === 'Admin') {
-      return next()
+      return next();
     }
     return res.status(401).send({
       message: 'Your not Authorized to access this page!'
-    })
+    });
   }
 };
 

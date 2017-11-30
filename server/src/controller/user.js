@@ -63,10 +63,10 @@ class User {
         .then(foundUser => {
           if (!foundUser) {
             res.status(400).send({
-              message: 'Username or Password!'
+              message: 'Incorrect Signin Credentials!'
             })
           } else if(bcrypt.compareSync(req.body.password, foundUser.password)){
-            const token = jwt.sign({role: foundUser.role}, process.env.SECRET_KEY, {
+            const token = jwt.sign({user: foundUser}, process.env.SECRET_KEY, {
               expiresIn: 60 * 60 * 24
             });
             console.log(foundUser.role)
@@ -79,9 +79,10 @@ class User {
             }else{
               return res.status(200).send({
                 message: 'Signin Successful!',
+                Token: token
+                
               })
-            } 
-            
+            }
           }else {
             res.status(401).send({
               Error: 'Incorrect Password'

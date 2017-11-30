@@ -2,40 +2,42 @@ import model from '../../models';
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken';
 import Sequelize from 'sequelize';
+import Auth from '../middlewares/authenticate'
+
 
 const centers = model.Centers;
 
 class Center {
+
   addCenter(req, res) {
-    const { name, description, location, capacity, userId, venueType, facilities } = req.body;
+    const { name, description, decoded, location, capacity, userId, venueType, facilities } = req.body;
       centers.create ({
-      centerId: req.params.id,
+      userId: decoded.user.id,
       name,
       description,
       location,
       capacity,
       venueType,
-      userId,
       facilities
     })
-    .then(created =>{
+    .then(created => {
       return res.status(201).send({
         message: 'Center Added Successfully',
         created
       })
     })
-    // .catch((err) => {
-    //   return res.status(500).send({
-    //     message: 'Some error occured!'
-    //   });
-    // });
+    .catch((err) => {
+      return res.status(500).send({
+        message: 'Some error occured!'
+      });
+    });
 }
   
   editCenter(req, res) {
     const { userId, name, description, location, capacity, venueType, facilities } = req.body;
     centers.findOne({
         where: {
-         userId: req.params.id,
+         userId: req.decoded.id,
         }
       })
       .then(centers => {
@@ -81,7 +83,7 @@ class Center {
 }
 
   getCenter(req, res) {
-    const pos = global.centers.findIndex(x => x.centerId === parseInt(req.params.id, 10));
+    const pos = global.centers.findIndex(x => x.centerId === parseInt(req.decoded.id, 10));
     return res.status(200).send({ center: global.centers[pos] });
   }
 
