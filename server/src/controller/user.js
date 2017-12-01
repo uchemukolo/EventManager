@@ -1,78 +1,95 @@
-import models from '../../models';
+import model from '../../models';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import Sequelize from 'sequelize';
 
-const Users = models.Users;
+require('dotenv').config();
 
+const Users = model.Users;
 class User {
-    signup (req, res) {
-        const {email, username, password, confirmPassword} = req.body;
-            users.find({
-                where:{
-                    $or: [
-                        { email: email },
-                        { username: username },
-                    ]
-                }
-            }).then(foundUser => {
-                if (!foundUser) {
-                    return users
-                    .create({
-                        email: email,
-                        username: username,
-                        password: bcryptjs.hashSync(password, 10)
-                    }).then(signup => {
-                        res.status(201).json(signup)
-                    })
-                    .catch(err => {
-                        console.log(err)
-                        res.status(500).send({
-                            message: 'some error occured!'
-                        })
-                    })
-                } else if(foundUser.email) {
-                    res.status(400).json({
-                        message: 'email already exists'
-                    })
-                } else if (foundUser.username) {
-                    res.status(400).json({
-                        message: 'user name already exists'
-                    })
-                }
-            }) 
+  signup(req, res) {
+    const {email, username, firstName, lastName, password, confirmPassword} = req.body;
+    Users.find({
+      where: {
+        $or: [
+          { email },
+          { username }
+        ]
+      }
+    })
+      .then((foundUser) => {
+        if (!foundUser) {
+          return Users.create({
+            email,
+            username,
+            firstName,
+            lastName,
+            password: bcrypt.hashSync(password, 10),
+          })
+            .then((newUser) => { 
+              const token = jwt.sign({ user: foundUser }, process.env.SECRET_KEY, {
+              expiresIn: 60 * 60 * 24
+            });
+              res.status(201).send({
+                message: 'Signup Successful',
+                username,
+                firstName,
+                lastName,
+                email,
+                Token: token
+              });
+            })
+            .catch((err) => {
+              res.status(500).send({
+                message: 'some error occured!'
+              });
+            });
         }
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: 'some error occured!'
+        });
+      });
+  }
 
-    signin (req, res) {
-        const { username, email, password, } = req.body;
-        return users
-            .findOne({
-                 where: {
-                    $or: [
-                        { username: req.body.username },
-                        { email: req.body.username }
-                     ]
-                 }
-             }).then(foundUser => {
-                 //console.log(found) 
-                 if (!foundUser) {
-                     res.status(400).json({
-                         message: 'Wrong Signin Credentials!'
-                     })
-                 } else if(bcryptjs.compareSync(req.body.password, foundUser.password)){
-                    
-                    if (foundUser) {
-                        return res.status(200).json({
-                             message: 'Signin Successful!'
-                            //  role: foundUser.role,
-                            //  Token: token
-                         }) 
-                         } else {
-                        res.status(401).json({
-                            ERrOR: 'Incorrect Password'
-                            })
-                     };
-                };
-             });
-        };
-    }         
+  signin(req, res) {
+    const { username, email, password, } = req.body;
+    Users.findOne({
+      where: {
+        $or: [
+          { username: req.body.username },
+          { email: req.body.username }
+        ]
+      }
+    })
+      .then((foundUser) => {
+        if (!foundUser) {
+          res.status(400).send({
+            message: 'Incorrect Signin Credentials!'
+          });
+        }
+        else if (bcrypt.compareSync(req.body.password, foundUser.password)) {
+          const user = {
+            id: foundUser.id,
+            role: foundUser.role,
+            username: foundUser.username
+          }
+          const token = jwt.sign(user, process.env.SECRET_KEY, {
+            expiresIn: 60 * 60 * 24
+          });
+          return res.status(200).send({
+            message: 'Signin Successful!',
+            Token: token
+          });
+        }
+        else {
+          res.status(401).send({
+            Error: 'Incorrect Password'
+          });
+        }
+        });
+  }
+    }
 const userController = new User();
-
 export default userController;

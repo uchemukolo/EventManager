@@ -29,15 +29,15 @@ export default (sequelize, DataTypes) => {
     allownull: false,
     defaultValue: 'Regular'
   } 
-}) 
+});
   Users.associate = (models) => {
-          Users.hasMany(models.Events, {
-            foreignKey: 'userId',
-            onDelete: 'CASCADE',           
-          });
-          // Users.hasMany(models.Centers, {
-          //   foreignKey: 'userId',
-          //   });
-        }
-      return Users;
-    };
+    Users.hasMany(models.Events, {
+      foreignKey: 'userId',
+      onDelete: 'CASCADE'
+    });
+    Users.hasMany(models.Centers, {
+      foreignKey: 'userId',
+    });          
+  };   
+  return Users;
+}

@@ -37,5 +37,5 @@ export default (sequelize, DataTypes) => {
       foreignKey: 'userId',
     });
   }
-    return centers;
+    return Centers;
   };

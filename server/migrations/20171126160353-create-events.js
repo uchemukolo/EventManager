@@ -12,25 +12,22 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,        
         references: {
-          model: 'users',
+          model: 'Users',
           key: 'id',
           as: 'userId'
         }
       },
-      centerId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'centers',
-          key: 'id',
-          as: 'centerId'
-        }
-      },
+      centerName: {
+        type: Sequelize.STRING,
+        allowNull: false
+        },
       eventType: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       eventDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
