@@ -1,18 +1,19 @@
 import model from '../../models';
-import bcrypt from 'bcryptjs'
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import Sequelize from 'sequelize';
-import Auth from '../middlewares/authenticate'
+import Auth from '../middlewares/authenticate';
 
 
-const centers = model.Centers;
+const center = model.Centers;
 
 class Center {
 
-  addCenter(req, res) {
-    const { name, description, decoded, location, capacity, userId, venueType, facilities } = req.body;
-      centers.create ({
-      userId: decoded.user.id,
+  add(req, res) {
+    const {name, description, decoded, location, capacity, userId, venueType, facilities} = req.body;
+    const Decoded = jwt.decode(req.headers.token);
+    center.create({
+      userId: req.decoded.id,
       name,
       description,
       location,
@@ -20,73 +21,74 @@ class Center {
       venueType,
       facilities
     })
-    .then(created => {
-      return res.status(201).send({
+      .then(created => res.status(201).send({
         message: 'Center Added Successfully',
         created
-      })
-    })
-    .catch((err) => {
-      return res.status(500).send({
+      }))
+      .catch(err => res.status(500).send({
         message: 'Some error occured!'
-      });
-    });
-}
-  
-  editCenter(req, res) {
-    const { userId, name, description, location, capacity, venueType, facilities } = req.body;
-    centers.findOne({
-        where: {
-         userId: req.decoded.id,
-        }
-      })
-      .then(centers => {
-        if (!centers) {
+      }));
+  }
+
+  update(req, res) {
+    const {userId, name, description, location, capacity, venueType, facilities} = req.body;
+    const Decoded = jwt.decode(req.headers.token);
+    center.findOne({
+      where: {
+        userId: req.decoded.id,
+      }
+    })
+      .then(center => {
+        if (!center) {
           return res.status(404).send({
             message: 'Center Not Found',
           });
-        } else {
-          return centers
+        }
+        return center
           .update({
-            userId: req.body.userId || centers.userId,
-            name: req.body.name || centers.name,
-            description: req.body.description || centers.description,
-            location: req.body.location || centers.location,
-            capacity: req.body.capacity || centers.capacity,
-            venueType: req.body.venueType || centers.venueType,
-            facilities: req.body.facilities || centers.facilities     
-        })
-        .then(updated => { 
-          return res.status(201).send({
-          message: 'Update Successful',
-          updated
-        });
-    })
-    .catch((error) => {
-        res.status(500).send({
-          message: 'Some Error Occured'
-        });
-    })
+            userId: req.body.userId || center.userId,
+            name: req.body.name || center.name,
+            description: req.body.description || center.description,
+            location: req.body.location || center.location,
+            capacity: req.body.capacity || center.capacity,
+            venueType: req.body.venueType || center.venueType,
+            facilities: req.body.facilities || center.facilities
+          })
+          .then(created => res.status(201).send({
+            message: 'Update Successful',
+            created
+          }))
+          .catch(err => res.status(500).send({
+            message: 'Some error occured!'
+          }));
+      });
   }
-  })
-    }
 
   getAll(req, res) {
-    return centers
-    .all()
-    .then(getAll => {
-    res.status(200).send({
-      message: 'Successful',
-      getAll
-    });
-  });
-}
-
-  getCenter(req, res) {
-    const pos = global.centers.findIndex(x => x.centerId === parseInt(req.decoded.id, 10));
-    return res.status(200).send({ center: global.centers[pos] });
+    return center
+      .all()
+      .then((getAll) => {
+        res.status(200).send({
+          message: 'Successful',
+          getAll
+        });
+      });
   }
 
+
+ getOne (req, res) {
+  return center
+    .findById(req.params.id).then(found => {
+      if (!found) {
+        res.status(404).send({
+          message: 'Center not Found!'
+        })
+      } else {
+        res.status(200).send(found)
+      }
+    })
+    .catch(error => res.status(400).send(error))
+}
 }
 const centerController = new Center();
 
