@@ -4,3 +4,4 @@ coverage
 server/dist/
 .github/
 .env
+bash.exe.stackdump
