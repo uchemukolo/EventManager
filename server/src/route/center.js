@@ -7,9 +7,9 @@ import validate from '../middlewares/validations';
 
 const router = express.Router();
 
-router.post('/', Auth.Verify, validate.addCenter, center.addCenter);
-router.put('/:id', Auth.Verify, validate.addCenter, center.editCenter);
-router.get('/', center.getAll);
-router.get('/:id', center.getCenter);
+router.post('/', Auth.Verify, Auth.Admin, validate.addCenter, center.add);
+router.put('/:id', Auth.Verify, Auth.Admin, validate.addCenter, center.update);
+router.get('/', Auth.Verify, center.getAll);
+router.get('/:id', Auth.Verify, center.getOne);
 
 export default router;
