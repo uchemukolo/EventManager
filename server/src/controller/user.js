@@ -25,7 +25,6 @@ class User {
             firstName,
             lastName,
             password: bcrypt.hashSync(password, 10),
-            role: 'Regular'
           })
             .then((newUser) => { 
               const token = jwt.sign({ user: foundUser }, process.env.SECRET_KEY, {
@@ -71,7 +70,12 @@ class User {
           });
         }
         else if (bcrypt.compareSync(req.body.password, foundUser.password)) {
-          const token = jwt.sign({ user: foundUser }, process.env.SECRET_KEY, {
+          const user = {
+            id: foundUser.id,
+            role: foundUser.role,
+            username: foundUser.username
+          }
+          const token = jwt.sign(user, process.env.SECRET_KEY, {
             expiresIn: 60 * 60 * 24
           });
           return res.status(200).send({

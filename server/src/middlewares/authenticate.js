@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import app from '../app';
 
 require('dotenv').config();
 
@@ -8,12 +9,12 @@ const authenticate = {
   Verify: (req, res, next) => {
     const token = req.body.token || req.query.token || req.headers.token;
     if (!token) {
-      return res.status(401).send({
+      res.status(400).send({
         message: 'Unauthorised User!'
       });
     }
 
-    jwt.verify(token, key, (err, decoded) => {
+    jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
       if (err) {
         return res.status(403).send({
           error: 'Token could not be authenticated'
@@ -28,7 +29,7 @@ const authenticate = {
       return next();
     }
     return res.status(401).send({
-      message: 'Your not Authorized to access this page!'
+      message: 'You Are not Authorized to access this page!'
     });
   }
 };

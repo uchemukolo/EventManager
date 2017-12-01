@@ -2,19 +2,19 @@ const Validation = {
 
   signup(req, res, next) {
     const {username, firstName, lastName, email, password, confirmPassword} = req.body;
-    if (!username) {
+    if (!username || typeof username !== 'string') {
       return res.status(400).send({
         username: 'Please Enter Username'
       });
-    } else if (!email) {
+    } else if (!email || typeof email !== 'string') {
       return res.status(400).send({
         email: 'Please Enter Email'
       });
-    } else if (!firstName) {
+    } else if (!firstName || typeof firstName !== 'string') {
       return res.status(400).send({
         email: 'Please Enter Your First Name'
       });
-    } else if (!lastName) {
+    } else if (!lastName || typeof lastName !== 'string') {
       return res.status(400).send({
         email: 'Please Enter Your Last Name'
       });
@@ -34,7 +34,7 @@ const Validation = {
   },
   signin(req, res, next) {
     const { username, password } = req.body;
-    if (!username) {
+    if (!username || typeof username !== 'string') {
       res.status(400).send({
         message: 'Please enter Your username or email'
       });
@@ -45,8 +45,8 @@ const Validation = {
     } next();
   },
   addEvent(req, res, next) {
-    const { userId, centerId, eventType, eventDate } = req.body;
-    if (!eventType) {
+    const { userId, centerName, eventType, eventDate } = req.body;
+    if (!eventType || typeof eventType !== 'string') {
       res.status(400).send({
         message: 'Please Select Type Of Event'
       });
@@ -54,7 +54,7 @@ const Validation = {
       return res.status(400).send({
         message: 'Field Cannot Be Empty!'
       });
-    } else if (!centerId) {
+    } else if (!centerName || typeof centerName !== 'string') {
       return res.status(400).send({
         message: 'Field Cannot Be Empty!'
       });
@@ -66,31 +66,27 @@ const Validation = {
   },
   addCenter(req, res, next) {
     const { userId, centerId, name, description, location, capacity, venueType, } = req.body;
-    if (!name) {
+    if (!name || typeof name !== 'string') {
       res.status(400).send({
         message: 'Please Add Name Of The Center!'
       });
-    } else if (!description) {
+    } else if (!description || typeof description !== 'string') {
       res.status(400).send({
-        message: 'Field Cannot Be Empty!'
+        message: 'Please Add Description!'
       });
     } else if (!userId) {
       return res.status(400).send({
         message: 'Field Cannot Be Empty!'
       });
-    } else if (!centerId) {
-      return res.status(400).send({
-        message: 'Field Cannot Be Empty!'
-      });
-    } else if (!location) {
+    } else if (!location || typeof location !== 'string') {
       res.status(400).send({
         message: 'Please Select location Of Event Center'
       });
     } else if (!capacity) {
       res.status(400).send({
-        message: 'Please Select Capacity'
+        message: 'Please add Capacity'
       });
-    } else if (!venueType) {
+    } else if (!venueType || typeof venueType !== 'string') {
       res.status(400).send({
         message: 'Please Select Venue Type'
       });

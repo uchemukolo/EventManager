@@ -17,20 +17,17 @@ module.exports = {
           as: 'userId'
         }
       },
-      centerId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Centers',
-          key: 'id',
-          as: 'centerId'
-        }
-      },
+      centerName: {
+        type: Sequelize.STRING,
+        allowNull: false
+        },
       eventType: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
       },
       eventDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
