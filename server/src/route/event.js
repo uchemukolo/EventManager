@@ -1,6 +1,6 @@
 import event from '../controller/event';
 import express from 'express';
-import validate from '../middlewares/validations';
+import validate from '../middlewares/Validations';
 import Auth from '../middlewares/authenticate';
 
 
