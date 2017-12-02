@@ -45,18 +45,19 @@ const Validation = {
     } next();
   },
   addEvent(req, res, next) {
-    const { userId, centerName, eventType, eventDate } = req.body;
+    const { userId, centerId, eventType, eventDate } = req.body;
+    console.log(centerId);
     if (!eventType || typeof eventType !== 'string') {
       res.status(400).send({
         message: 'Please Select Type Of Event'
       });
     } else if (!userId) {
       return res.status(400).send({
-        message: 'Field Cannot Be Empty!'
+        message: 'Please Add your User ID!'
       });
-    } else if (!centerName || typeof centerName !== 'string') {
+    } else if (!centerId || isNaN(centerId)) {
       return res.status(400).send({
-        message: 'Field Cannot Be Empty!'
+        message: 'Please Add your Center ID!'
       });
     } else if (!eventDate) {
       res.status(400).send({
