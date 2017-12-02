@@ -7,8 +7,8 @@ import Auth from '../middlewares/authenticate';
 
 const router = express.Router();
 
-router.post('/', Auth.Verify, validate.addEvent, event.addEvent);
-// router.put('/:id', Auth.Verify, validate.editEvent, event.editEvent);
-// router.delete('/:id', Auth.Verify, event.deleteEvent);
+router.post('/', Auth.Verify, validate.addEvent, event.add);
+router.put('/:id', Auth.Verify, validate.addEvent, event.update);
+router.delete('/:id', Auth.Verify, event.delete);
 
 export default router;

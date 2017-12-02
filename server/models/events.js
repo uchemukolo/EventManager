@@ -13,7 +13,7 @@ export default (sequelize, DataTypes) => {
       allowNull: false
     },     
     eventDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       allowNull: false
     }
   });
